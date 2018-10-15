@@ -162,7 +162,7 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     
     /// Begins bluetooth scanning for Noke Devices that have been added to the device array
     public func startScanForNokeDevices(){
-        self.delegate?.setLibraryMode(NokeLibraryMode.SANDBOX) 
+        self.setLibraryMode(NokeLibraryMode.SANDBOX) 
         if(uploadUrl == ""){
             debugPrint("No Library Mode has been set. Please set using the setLibraryMode method")
             self.delegate?.nokeErrorDidOccur(error: NokeDeviceManagerError.nokeLibraryErrorNoModeSet, message: "No Library Mode has been set. Please set using the setLibraryMode method", noke: nil)
