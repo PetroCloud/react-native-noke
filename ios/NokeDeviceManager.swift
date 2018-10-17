@@ -204,7 +204,7 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     }
     
     /// Allows NokeDeviceManager to discover devices that haven't been added to the device array
-    public func setAllowAllNokeDevices(_ allow: Bool){
+    private func setAllowAllNokeDevices(_ allow: Bool){
         allowAllNokeDevices = allow
     }
     

@@ -39,7 +39,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
     }
 
     func nokeDeviceDidShutdown(noke: NokeDevice, isLocked: Bool, didTimeout: Bool) { 
-        sendEvent(withName: "onNokeShutdown", body: ["name": noke.name, "mac": noke.mac, "isLocked": true, "didTimeout": false]) /////
+        sendEvent(withName: "onNokeShutdown", body: ["name": noke.name, "mac": noke.mac, "isLocked": isLocked, "didTimeout": didTimeout])
     }
     
     func nokeErrorDidOccur(error: NokeDeviceManagerError, message: String, noke: NokeDevice?) {
@@ -102,16 +102,6 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         rejecter reject: RCTPromiseRejectBlock
         ) {
         NokeDeviceManager.shared().delegate = self
-        
-        resolve(["status": true])
-    }
-
-    @objc func setApiUrl(
-        _ url: String,
-        resolver resolve: RCTPromiseResolveBlock,
-        rejecter reject: RCTPromiseRejectBlock
-        ) {
-        NokeDeviceManager.shared().changeDefaultUploadUrl(url)
         
         resolve(["status": true])
     }
@@ -244,6 +234,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
             "onNokeUnlocked",
             "onNokeLocked",
             "onNokeDisconnected",
+            "onNokeShutdown",
             "onBluetoothStatusChanged",
             "onError"
         ]
