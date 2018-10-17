@@ -106,6 +106,33 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         resolve(["status": true])
     }
 
+    @objc func setApiUrl(  
+        _ code: Int,
+        resolver resolve: RCTPromiseResolveBlock,
+        rejecter reject: RCTPromiseRejectBlock
+        ) {
+        var mode: NokeLibraryMode = NokeLibraryMode.SANDBOX
+        
+        switch code {
+        case 0:
+            mode = NokeLibraryMode.SANDBOX
+            break
+        case 1: 
+            mode = NokeLibraryMode.PRODUCTION
+            break
+        case 2: 
+            mode = NokeLibraryMode.DEVELOP
+            break
+        default:
+            mode = NokeLibraryMode.SANDBOX
+            break
+        }
+
+        NokeDeviceManager.shared().setLibraryMode(mode)
+        
+        resolve(["status": true])
+    } 
+
     @objc func setApiKey(
         _ key: String,
         resolver resolve: RCTPromiseResolveBlock,
