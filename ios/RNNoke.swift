@@ -97,12 +97,15 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         resolve(["status": true])
     }
     
-    @objc func initiateNokeService(
-        _ resolve: RCTPromiseResolveBlock,
+    @objc func initiateNokeService(  //////////////////
+        _ mode: Int, 
+        resolver resolve: RCTPromiseResolveBlock,
         rejecter reject: RCTPromiseRejectBlock
         ) {
         NokeDeviceManager.shared().delegate = self
-        
+
+        setApiUrl(mode) /////////////// test that this works by calling the method in this object
+
         resolve(["status": true])
     }
 

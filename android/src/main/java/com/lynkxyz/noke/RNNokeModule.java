@@ -37,6 +37,8 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   private NokeDeviceManagerService mNokeService = null;
   private NokeDevice currentNoke;
 
+  private Integer nokeLibraryMode = 0; ////////
+
   public RNNokeModule(ReactApplicationContext context) {
     // Pass in the context to the constructor and save it so you can emit events
     // https://facebook.github.io/react-native/docs/native-modules-android.html#the-toast-module
@@ -59,13 +61,15 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod 
-  private void setApiUrl(String url, Promise promise) {
+  private void setApiUrl(String url, Promise promise) {   ////////// This is doing nothing for Android
     try {
       if(mNokeService == null) {
         promise.reject("message", "mNokeService is null");
         return;
       }
       // mNokeService.setUploadUrl(url);
+      // nokeLibraryMode = mode;
+
       final WritableMap event = Arguments.createMap();
       event.putBoolean("status", true);
 
@@ -77,9 +81,11 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
 
   @ReactMethod 
   private void setApiKey(String key, Promise promise) {
+    Log.d(TAG, "##### setApiKey key param: " + key);
     try {
       if(mNokeService == null) {
         promise.reject("message", "mNokeService is null");
+        Log.d(TAG, "##### mNokeService is null");
         return;
       }
       mNokeService.setApiKey(key);
@@ -144,9 +150,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  private void initiateNokeService(Promise promise) {
+  private void initiateNokeService(int mode, Promise promise) {  ////////////
     try {
       Intent nokeServiceIntent = new Intent(reactContext, NokeDeviceManagerService.class);
+      nokeLibraryMode = mode; ////////
       reactContext.bindService(nokeServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
       WritableMap event = Arguments.createMap();
       event.putBoolean("status", true);
@@ -233,7 +240,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     }
   }
 
-  @ReactMethod  /////////////////
+  @ReactMethod
   public void connect(ReadableMap data, Promise promise) {
     if(mNokeService == null) {
       promise.reject("message", "mNokeService is null");
@@ -252,7 +259,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     final WritableMap event = Arguments.createMap();
     event.putBoolean("status", true);
     promise.resolve(event);
-  }   ////////////////////////
+  } 
 
   @ReactMethod
   public void disconnect(Promise promise) {
@@ -335,16 +342,13 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
 
   private ServiceConnection mServiceConnection = new ServiceConnection() {
 
-    public void onServiceConnected(ComponentName className, IBinder rawBinder) {
-      // final WritableMap initEvent = Arguments.createMap();
-      // initEvent.putString("message", "On service connected");
-      // initEvent.putBoolean("status", true);
-      // emitDeviceEvent("onServiceConnected", initEvent);
-
+    public void onServiceConnected(ComponentName className, IBinder rawBinder) {  /////////////
       Log.w(TAG, "ON SERVICE CONNECTED");
 
       //Store reference to service
-      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(NokeDefines.NOKE_LIBRARY_SANDBOX);
+      // mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(NokeDefines.NOKE_LIBRARY_SANDBOX);
+      Log.w(TAG, "##### nokeLibraryMode: " + nokeLibraryMode);
+      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(nokeLibraryMode);
 
       //Uncomment to allow devices that aren't in the device array
       mNokeService.setAllowAllDevices(true);
@@ -352,20 +356,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       //Register callback listener
       mNokeService.registerNokeListener(mNokeServiceListener);
 
-      //Add locks to device manager
-
-
-            /*
-            Sets the url to use for uploading responses from the lock to the API.  This is the only
-            case where the mobile app should be making requests to the Noke Core API directly.
-             */
-
-      // mNokeService.setUploadUrl("https://coreapi-sandbox.appspot.com/upload/");
-
-      //Start bluetooth scanning
-      // mNokeService.startScanningForNokeDevices(); //////////////
-      // String message = "Scanning for Noke Devices"; ////////////////
-      String message = "Service is connected"; ////////////////
+      String message = "Service is connected"; 
 
 
       if (!mNokeService.initialize()) {
@@ -388,7 +379,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
 
   private NokeServiceListener mNokeServiceListener = new NokeServiceListener() {
     @Override
-    public void onNokeDiscovered(NokeDevice noke) { // can we do some getVluetooth settings here?
+    public void onNokeDiscovered(NokeDevice noke) {
       
       Log.i(TAG, "$$$$$$ discoveredNoke: " + noke);
       final WritableMap event = Arguments.createMap();
@@ -415,7 +406,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       event.putString("session", noke.getSession());
       event.putInt("battery", noke.getBattery());
       emitDeviceEvent("onNokeConnected", event);
-      // mNokeService.stopScanning();  ////////////////
     }
 
     @Override
@@ -453,7 +443,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       emitDeviceEvent("onNokeDisconnected", event);
       currentNoke = null;
       mNokeService.uploadData();
-      // mNokeService.startScanningForNokeDevices();  /////////////////
     }
 
     @Override
@@ -476,7 +465,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       final WritableMap event = Arguments.createMap();
       event.putInt("code", bluetoothStatus);
       emitDeviceEvent("onBluetoothStatusChanged", event);
-      // why was mNokeService.startScanningForNokeDevices(); not here like ios? only for bluetooth.on?
     }
 
     @Override
