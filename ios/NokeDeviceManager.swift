@@ -162,9 +162,6 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     
     /// Begins bluetooth scanning for Noke Devices that have been added to the device array
     public func startScanForNokeDevices(){
-        // self.setLibraryMode(NokeLibraryMode.SANDBOX) ///////
-        // NokeDeviceManager.shared().setLibraryMode(NokeLibraryMode.SANDBOX)
-        
         if(uploadUrl == ""){
             debugPrint("No Library Mode has been set. Please set using the setLibraryMode method")
             self.delegate?.nokeErrorDidOccur(error: NokeDeviceManagerError.nokeLibraryErrorNoModeSet, message: "No Library Mode has been set. Please set using the setLibraryMode method", noke: nil)
@@ -422,7 +419,6 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     
     /// Sets Mobile API Key for uploading logs to the Core API
     public func setAPIKey(_ apiKey: String){
-        print("#### setAPIKey key: \(apiKey)")
         self.apiKey = apiKey
     }
     
@@ -435,15 +431,12 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
         switch mode {
         case NokeLibraryMode.SANDBOX:
             self.uploadUrl = ApiURL.sandboxUploadURL
-            print("#### API URL SANDBOX")
             break
         case NokeLibraryMode.PRODUCTION:
             self.uploadUrl = ApiURL.productionUploadURL
-            print("#### API URL PRODUCTION")
             break
         case NokeLibraryMode.DEVELOP:
             self.uploadUrl = ApiURL.developUploadURL
-            print("#### API URL DEVELOP")
             break
         }
     }

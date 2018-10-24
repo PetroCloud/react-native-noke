@@ -97,23 +97,13 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         resolve(["status": true])
     }
     
-    @objc func initiateNokeService(  //////////////////
-        _ mode: Int, 
+    @objc func initiateNokeService(
+        _ code: Int, 
         resolver resolve: RCTPromiseResolveBlock,
         rejecter reject: RCTPromiseRejectBlock
         ) {
         NokeDeviceManager.shared().delegate = self
 
-        setApiUrl(mode) /////////////// test that this works by calling the method in this object
-
-        resolve(["status": true])
-    }
-
-    @objc func setApiUrl(  
-        _ code: Int,
-        resolver resolve: RCTPromiseResolveBlock,
-        rejecter reject: RCTPromiseRejectBlock
-        ) {
         var mode: NokeLibraryMode = NokeLibraryMode.SANDBOX
         
         switch code {
@@ -132,9 +122,9 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         }
 
         NokeDeviceManager.shared().setLibraryMode(mode)
-        
+
         resolve(["status": true])
-    } 
+    }
 
     @objc func setApiKey(
         _ key: String,

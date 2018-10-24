@@ -32,13 +32,7 @@ RCT_EXTERN_METHOD(initiateNokeService)
 RCT_EXTERN_METHOD(offlineUnlock)
 
 RCT_EXTERN_METHOD(
-                  initiateNokeService: (RCTPromiseResolveBlock)resolve
-                  rejecter: (RCTPromiseRejectBlock)reject
-                  )
-
-
-RCT_EXTERN_METHOD(
-                  setApiUrl:(NSInteger) value 
+                  initiateNokeService: (NSInteger) code
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject
                   )
