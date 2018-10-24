@@ -37,7 +37,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   private NokeDeviceManagerService mNokeService = null;
   private NokeDevice currentNoke;
 
-  private Integer nokeLibraryMode = 0; ////////
+  private Integer nokeLibraryMode = 0;
 
   public RNNokeModule(ReactApplicationContext context) {
     // Pass in the context to the constructor and save it so you can emit events
@@ -61,31 +61,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod 
-  private void setApiUrl(String url, Promise promise) {   ////////// This is doing nothing for Android
-    try {
-      if(mNokeService == null) {
-        promise.reject("message", "mNokeService is null");
-        return;
-      }
-      // mNokeService.setUploadUrl(url);
-      // nokeLibraryMode = mode;
-
-      final WritableMap event = Arguments.createMap();
-      event.putBoolean("status", true);
-
-      promise.resolve(event);
-    } catch (IllegalViewOperationException e) {
-      promise.reject("message", e.getMessage());
-    }
-  }
-
-  @ReactMethod 
   private void setApiKey(String key, Promise promise) {
-    Log.d(TAG, "##### setApiKey key param: " + key);
     try {
       if(mNokeService == null) {
         promise.reject("message", "mNokeService is null");
-        Log.d(TAG, "##### mNokeService is null");
         return;
       }
       mNokeService.setApiKey(key);
@@ -150,10 +129,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  private void initiateNokeService(int mode, Promise promise) {  ////////////
+  private void initiateNokeService(int mode, Promise promise) {  
     try {
       Intent nokeServiceIntent = new Intent(reactContext, NokeDeviceManagerService.class);
-      nokeLibraryMode = mode; ////////
+      nokeLibraryMode = mode;
       reactContext.bindService(nokeServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
       WritableMap event = Arguments.createMap();
       event.putBoolean("status", true);
@@ -248,7 +227,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     }
 
     NokeDevice daNoke = mNokeService.nokeDevices.get(data.getString("mac"));
-    Log.i(TAG, "$$$$$$$$$ daNoke: " + daNoke);
     if(daNoke == null) {
       promise.reject("message", "unable to connect, noke not found");
       return;
@@ -342,12 +320,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
 
   private ServiceConnection mServiceConnection = new ServiceConnection() {
 
-    public void onServiceConnected(ComponentName className, IBinder rawBinder) {  /////////////
+    public void onServiceConnected(ComponentName className, IBinder rawBinder) {
       Log.w(TAG, "ON SERVICE CONNECTED");
 
       //Store reference to service
-      // mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(NokeDefines.NOKE_LIBRARY_SANDBOX);
-      Log.w(TAG, "##### nokeLibraryMode: " + nokeLibraryMode);
       mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(nokeLibraryMode);
 
       //Uncomment to allow devices that aren't in the device array
@@ -380,8 +356,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   private NokeServiceListener mNokeServiceListener = new NokeServiceListener() {
     @Override
     public void onNokeDiscovered(NokeDevice noke) {
-      
-      Log.i(TAG, "$$$$$$ discoveredNoke: " + noke);
       final WritableMap event = Arguments.createMap();
       event.putString("name", noke.getName());
       event.putString("mac", noke.getMac());
