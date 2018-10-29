@@ -414,6 +414,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       event.putString("mac", noke.getMac());
       event.putString("session", noke.getSession());
       event.putInt("battery", noke.getBattery());
+      event.putString("hwVersion", noke.getVersion());
       emitDeviceEvent("onNokeConnected", event);
       // mNokeService.stopScanning();  ////////////////
     }
