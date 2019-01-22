@@ -47,7 +47,7 @@ export default {
     if (Platform.OS === 'ios') {
       throw new Error('isLocationEnabled only available for Android platform')
     }
-    return RNNoke.isLocationFullyEnabled();
+    return RNNoke.isLocationEnabled();
   },
 
   AUTHOR: RNNoke.AUTHOR
