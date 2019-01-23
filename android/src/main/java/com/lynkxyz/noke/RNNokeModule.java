@@ -453,8 +453,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         @Override
         public void onDataUploaded(int i, String s) {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             event.putInt("i", i);
             event.putString("s", s);
             emitDeviceEvent("onDataUploaded", event);
@@ -463,8 +461,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         @Override
         public void onBluetoothStatusChanged(int bluetoothStatus) {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             event.putInt("code", bluetoothStatus);
             emitDeviceEvent("onBluetoothStatusChanged", event);
         }
@@ -472,8 +468,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         @Override
         public void onLocationStatusChanged(int locationStatus) {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             event.putInt("status", locationStatus);
             emitDeviceEvent("onLocationStatusChanged", event);
         }
@@ -481,8 +475,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         @Override
         public void onLocationChanged(Location position) {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             event.putDouble("lat", position.getLatitude());
             event.putDouble("long", position.getLongitude());
             emitDeviceEvent("onLocationChanged", event);
@@ -491,16 +483,12 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         @Override
         public void onLocationProviderEnabled() {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             emitDeviceEvent("onLocationProviderEnabled", event);
         }
 
         @Override
         public void onLocationProviderDisabled() {
             final WritableMap event = Arguments.createMap();
-            event.putString("name", noke.getName());
-            event.putString("mac", noke.getMac());
             emitDeviceEvent("onLocationProviderDisabled", event);
         }
 
