@@ -146,6 +146,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void isBluetoothEnabled(Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             final Boolean enabled = mNokeService.isBluetoothEnabled();
             final WritableMap event = Arguments.createMap();
             event.putBoolean("enabled", enabled);
@@ -159,6 +163,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void isLocationEnabled(Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             final Boolean enabled = mNokeService.isLocationFullyEnabled();
             final WritableMap event = Arguments.createMap();
             event.putBoolean("enabled", enabled);
@@ -172,6 +180,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void startScan(Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             mNokeService.startScanningForNokeDevices();
             final WritableMap event = Arguments.createMap();
             event.putBoolean("status", true);
@@ -185,6 +197,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void stopScan(Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             mNokeService.stopScanning();
             final WritableMap event = Arguments.createMap();
             event.putBoolean("status", true);
@@ -286,6 +302,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void removeAllNokes(Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             mNokeService.removeAllNoke();
             final WritableMap event = Arguments.createMap();
             event.putBoolean("status", true);
@@ -299,6 +319,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void removeNokeDevice(String mac, Promise promise) {
         try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
             mNokeService.removeNokeDevice(mac);
 
             final WritableMap event = Arguments.createMap();
@@ -313,6 +337,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void offlineUnlock(Promise promise) {
         try {
+            if (currentNoke == null) {
+                promise.reject("message", "currentNoke is null in disconnect");
+                return;
+            }
             WritableMap event = createCommonEvents(currentNoke);
 
             if (currentNoke == null) {
