@@ -8,7 +8,7 @@ buildscript {
     }
 
     configurations.all {
-        resolutionStrategy.cacheDynamicVersionsFor 5, 'minutes'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
 }
@@ -43,5 +43,5 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.github.petrocloud:noke-mobile-library-android:master-SNAPSHOT'
+    compile 'com.github.petrocloud:noke-mobile-library-android:111-SNAPSHOT'
 }
