@@ -76,11 +76,11 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         case NokeManagerBluetoothState.poweredOn:
             NokeDeviceManager.shared().startScanForNokeDevices()
             message = "on"
+            code = 12
             break
         case NokeManagerBluetoothState.poweredOff:
             debugPrint("NOKE MANAGER OFF")
             message = "off"
-            code = 12
             break
         default:
             debugPrint("NOKE MANAGER UNSUPPORTED")
