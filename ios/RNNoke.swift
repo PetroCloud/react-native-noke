@@ -74,7 +74,6 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         var code: Int = 10
         switch (state) {
         case NokeManagerBluetoothState.poweredOn:
-            NokeDeviceManager.shared().startScanForNokeDevices()
             message = "on"
             code = 12
             break
