@@ -71,6 +71,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
 
     func bluetoothManagerDidUpdateState(state: NokeManagerBluetoothState) {
         var message: String = ""
+        var code: Int = 10
         switch (state) {
         case NokeManagerBluetoothState.poweredOn:
             NokeDeviceManager.shared().startScanForNokeDevices()
@@ -79,13 +80,14 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         case NokeManagerBluetoothState.poweredOff:
             debugPrint("NOKE MANAGER OFF")
             message = "off"
+            code = 12
             break
         default:
             debugPrint("NOKE MANAGER UNSUPPORTED")
             message = "unsupported"
             break
         }
-        sendEvent(withName: "onBluetoothStatusChanged", body: ["code": 0, "message": message])
+        sendEvent(withName: "onBluetoothStatusChanged", body: ["code": code, "message": message])
     }
 
     // Export constants to use in your native module
