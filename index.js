@@ -53,5 +53,5 @@ export default {
     return RNNoke.isLocationEnabled();
   },
 
-  AUTHOR: RNNoke.AUTHOR
+  AUTHOR2: RNNoke.AUTHOR
 };
