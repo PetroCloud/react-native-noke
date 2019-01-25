@@ -502,10 +502,10 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         }
 
         @Override
-        public void onLocationChanged(Location position) {
+        public void onLocationChanged(double latitude, double longitude) {
             final WritableMap event = Arguments.createMap();
-            event.putDouble("lat", position.getLatitude());
-            event.putDouble("long", position.getLongitude());
+            event.putDouble("lat", latitude);
+            event.putDouble("long", longitude);
             emitDeviceEvent("onLocationChanged", event);
         }
 

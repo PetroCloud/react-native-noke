@@ -39,20 +39,16 @@ export default {
   fromNokeEvents,
   getEventListeners,
   isBluetoothEnabled: () => {
-    console.log('####', 'isBluetoothEnabled');
     if (Platform.OS === 'ios') {
       throw new Error('isBluetoothEnabled only available for Android platform');
     }
     return RNNoke.isBluetoothEnabled();
   },
   isLocationEnabled: () => {
-    console.log('####', 'isLocationEnabled');
     if (Platform.OS === 'ios') {
       throw new Error('isLocationEnabled only available for Android platform');
     }
     return RNNoke.isLocationEnabled();
   },
-
-  AUTHOR: RNNoke.AUTHOR,
-  AUTHORNEW: RNNoke.AUTHOR
+  AUTHOR: RNNoke.AUTHOR
 };
