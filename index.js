@@ -50,5 +50,17 @@ export default {
     }
     return RNNoke.isLocationEnabled();
   },
+  isLocationNetworkProviderEnabled: () => {
+    if (Platform.OS === 'ios') {
+      throw new Error('isLocationNetworkProviderEnabled only available for Android platform');
+    }
+    return RNNoke.isLocationNetworkProviderEnabled();
+  },
+  isLocationGpsProviderEnabled: () => {
+    if (Platform.OS === 'ios') {
+      throw new Error('isLocationGpsProviderEnabled only available for Android platform');
+    }
+    return RNNoke.isLocationGpsProviderEnabled();
+  },
   AUTHOR: RNNoke.AUTHOR
 };

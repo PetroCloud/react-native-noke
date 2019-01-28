@@ -178,6 +178,40 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void isLocationNetworkProviderEnabled(Promise promise) {
+        try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
+            final Boolean enabled = mNokeService.isLocationNetworkProviderEnabled();
+            final WritableMap event = Arguments.createMap();
+            event.putBoolean("enabled", enabled);
+
+            promise.resolve(event);
+        } catch (IllegalViewOperationException e) {
+            promise.reject("message", e.getMessage());
+        }
+    }
+
+    @ReactMethod
+    public void isLocationGpsProviderEnabled(Promise promise) {
+        try {
+            if (mNokeService == null) {
+                promise.reject("message", "mNokeService is null");
+                return;
+            }
+            final Boolean enabled = mNokeService.isLocationGpsProviderEnabled();
+            final WritableMap event = Arguments.createMap();
+            event.putBoolean("enabled", enabled);
+
+            promise.resolve(event);
+        } catch (IllegalViewOperationException e) {
+            promise.reject("message", e.getMessage());
+        }
+    }
+
+    @ReactMethod
     public void startScan(Promise promise) {
         try {
             if (mNokeService == null) {
