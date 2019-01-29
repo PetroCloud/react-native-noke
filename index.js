@@ -1,16 +1,17 @@
 import {
+  Platform,
   NativeEventEmitter,
   NativeModules
-} from 'react-native'
+} from 'react-native';
 import {
   fromNokeEvents,
   onEvent,
   onEventOnce,
   offEvent,
   getEventListeners
-} from './events'
+} from './events';
 
-const { RNNoke } = NativeModules
+const { RNNoke } = NativeModules;
 
 export default {
   initiateNokeService: RNNoke.initiateNokeService,
@@ -24,7 +25,7 @@ export default {
   offlineUnlock: RNNoke.offlineUnlock,
   sendCommands: RNNoke.sendCommands,
   addNokeDevice(data) {
-    return RNNoke.addNokeDevice(data)
+    return RNNoke.addNokeDevice(data);
   },
   removeAllNokes: RNNoke.removeAllNokes,
   removeNokeDevice: RNNoke.removeNokeDevice,
@@ -37,6 +38,11 @@ export default {
   addNokeDeviceOnce: RNNoke.addNokeDeviceOnce,
   fromNokeEvents,
   getEventListeners,
-
+  isBluetoothEnabled: () => {
+    if (Platform.OS === 'ios') {
+      throw new Error('isBluetoothEnabled only available for Android platform');
+    }
+    return RNNoke.isBluetoothEnabled();
+  },
   AUTHOR: RNNoke.AUTHOR
-}
+};

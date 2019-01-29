@@ -274,7 +274,8 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
             "onNokeDisconnected",
             "onNokeShutdown",
             "onBluetoothStatusChanged",
-            "onError"
+            "onError",
+            "onLocationStatusChanged"
         ]
     }
 }
