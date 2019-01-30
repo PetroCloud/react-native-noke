@@ -239,9 +239,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
 
         NokeDeviceManager.shared().removeAllNoke()
 
-        resolve([
-            "status": true
-            ])
+        resolve(["status": true])
     }
 
     @objc func removeNokeDevice(
@@ -252,9 +250,15 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
 
         NokeDeviceManager.shared().removeNoke(mac: mac)
 
-        resolve([
-            "status": true
-            ])
+        resolve(["status": true])
+    }
+
+    @objc func isBluetoothEnabled(
+        _ resolve: RCTPromiseResolveBlock,
+        rejecter reject: RCTPromiseRejectBlock
+        ) {
+
+        resolve(["enabled": NokeDeviceManager.shared().isBluetoothEnabled()])
     }
 
     override func supportedEvents() -> [String]! {

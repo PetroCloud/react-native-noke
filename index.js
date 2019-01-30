@@ -38,11 +38,6 @@ export default {
   addNokeDeviceOnce: RNNoke.addNokeDeviceOnce,
   fromNokeEvents,
   getEventListeners,
-  isBluetoothEnabled: () => {
-    if (Platform.OS === 'ios') {
-      throw new Error('isBluetoothEnabled only available for Android platform');
-    }
-    return RNNoke.isBluetoothEnabled();
-  },
+  isBluetoothEnabled: RNNoke.isBluetoothEnabled,
   AUTHOR: RNNoke.AUTHOR
 };
