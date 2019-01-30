@@ -43,5 +43,5 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.github.PetroCloud:noke-mobile-library-android:next02'
+    compile 'com.github.PetroCloud:noke-mobile-library-android:01355'
 }
