@@ -70,6 +70,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
     }
 
     func bluetoothManagerDidUpdateState(state: NokeManagerBluetoothState) {
+        debugPrint(state)
         switch (state) {
         case NokeManagerBluetoothState.poweredOn:
             sendEvent(withName: "onBluetoothStatusChanged", body: ["code": 12, "message": "on"])
@@ -80,6 +81,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
             break
         default:
             debugPrint("NOKE MANAGER UNSUPPORTED")
+            // FUTURE: handle other states
             break
         }
     }
