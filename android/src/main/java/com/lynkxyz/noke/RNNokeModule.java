@@ -455,16 +455,9 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     }
 
     @Override
-    public void onProviderEnabled() {
+    public void onLocationStatusChanged(boolean enabled) {
       final WritableMap event = Arguments.createMap();
-      event.putBoolean("status", true);
-      emitDeviceEvent("onLocationStatusChanged", event);
-    }
-
-    @Override
-    public void onProviderDisabled() {
-      final WritableMap event = Arguments.createMap();
-      event.putBoolean("status", false);
+      event.putBoolean("enabled", enabled);
       emitDeviceEvent("onLocationStatusChanged", event);
     }
 
