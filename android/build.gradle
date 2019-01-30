@@ -43,5 +43,5 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile 'com.github.PetroCloud:noke-mobile-library-android:PCAPP-732-fix-location-disabled-issue-SNAPSHOT'
+    compile 'com.github.PetroCloud:noke-mobile-library-android:next01'
 }
