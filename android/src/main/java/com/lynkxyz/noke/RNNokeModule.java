@@ -66,7 +66,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
         promise.reject("message", "mNokeService is null");
         return;
       }
-      mNokeService.setApiKey(key);
+      mNokeService.getService(nokeLibraryMode, key);
       final WritableMap event = Arguments.createMap();
       event.putBoolean("status", true);
 
