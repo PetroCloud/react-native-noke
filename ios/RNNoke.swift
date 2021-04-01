@@ -116,6 +116,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
 
     @objc func initiateNokeService(
         _ code: Int,
+        _ key: String,
         resolver resolve: RCTPromiseResolveBlock,
         rejecter reject: RCTPromiseRejectBlock
         ) {
@@ -139,15 +140,6 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         }
 
         NokeDeviceManager.shared().setLibraryMode(mode)
-
-        resolve(["status": true])
-    }
-
-    @objc func setApiKey(
-        _ key: String,
-        resolver resolve: RCTPromiseResolveBlock,
-        rejecter reject: RCTPromiseRejectBlock
-        ) {
         NokeDeviceManager.shared().setAPIKey(key)
 
         resolve(["status": true])
