@@ -13,6 +13,7 @@ Add sections as needed: `Enhancements`, `Changes`, `Bug fixes`, `Internal`
 ### Deployment
 
 ### Internal
+- Setting api key now is done through initiateNokeService method.
 
 ## [4.0.1](https://github.com/PetroCloud/react-native-noke/compare/v4.0.0...v4.0.1)
 

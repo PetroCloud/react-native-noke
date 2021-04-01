@@ -47,13 +47,18 @@ or latest version
 ## Usage
 ```javascript
 import RNNoke from 'react-native-noke';
-RNNoke.initiateNokeService(mode)
+RNNoke.initiateNokeService(mode, apiKey)
 
-interface NokeData {
+interface NokeDevice {
   name?: string
+  mac?: string
+}
+
+interface NokeOfflineValues {
+  name?: string
+  mac?: string
   key?: string
-  command?: string
-  macAddress: string
+  cmd: string
 }
 
 interface NokeCommandsData {
@@ -91,13 +96,15 @@ type EventName =
   'onNokeUnlocked' |
   'onNokeDisconnected' |
   'onBluetoothStatusChanged' |
+  'onLocationStatusChanged' |
   'onError'
   
 interface RNNoke {
   initiateNokeService: () => Promise<{status: boolean}>
   startScan: () => Promise<{status: boolean}>
   stopScan: () => Promise<{status: boolean}>
-  addNokeDeviceOnce: (data: NokeData) => Promise<NokeResponse>
+  addNokeDevice: (data: NokeDevice) => Promise<NokeResponse>
+  addNokeOfflineValues: (data: NokeOfflineValues) => Promise<NokeResponse>
   sendCommands: (data: NokeCommandsData) => Promise<NokeResponse>
   removeAllNokes: () => Promise<null>
   removeNokeDevice: () => Promise<null>
@@ -121,6 +128,7 @@ export class App extends Component {
     .on('onNokeUnlocked', data => console.log('onNokeUnlocked', data))
     .on('onNokeDisconnected', data => console.log('onNokeDisconnected', data))
     .on('onBluetoothStatusChanged', data => console.log('onBluetoothStatusChanged', data))
+    .on('onLocationStatusChanged', data => console.log('onLocationStatusChanged', data))
     .on('onError', data => console.log('onError', data))
   }
 
@@ -145,7 +153,7 @@ export class App extends Component {
   }
 
   onAddNoke = () => {
-    RNNoke.addNokeDeviceOnce(data)
+    RNNoke.addNokeOfflineValues(data)
     .then(console.log)
     .catch(console.error)
   }
