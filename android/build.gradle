@@ -17,7 +17,7 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion "26.0.3"
 
     defaultConfig {
@@ -37,11 +37,12 @@ repositories {
 
     maven {
         url 'http://dl.bintray.com/dev-fingerlinks/maven'
+        allowInsecureProtocol = true
     }
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
+    implementation 'com.facebook.react:react-native:+'
     implementation 'com.google.code.gson:gson:2.8.2'
 }
