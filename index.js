@@ -6,7 +6,7 @@ import {
   onEvent,
   onEventOnce,
   offEvent,
-  getEventListeners
+  removeAllListeners
 } from './events';
 
 const { RNNoke } = NativeModules;
@@ -22,9 +22,8 @@ export default {
   off: offEvent,
   offlineUnlock: RNNoke.offlineUnlock,
   sendCommands: RNNoke.sendCommands,
-  addNokeDevice(data) {
-    return RNNoke.addNokeDevice(data);
-  },
+  addNokeDevice: RNNoke.addNokeDevice,
+  addNokeOfflineValues: RNNoke.addNokeOfflineValues,
   removeAllNokes: RNNoke.removeAllNokes,
   removeNokeDevice: RNNoke.removeNokeDevice,
   startScan: RNNoke.startScan,
@@ -35,7 +34,7 @@ export default {
   setOfflineData: RNNoke.setOfflineData,
   addNokeDeviceOnce: RNNoke.addNokeDeviceOnce,
   fromNokeEvents,
-  getEventListeners,
+  removeAllListeners,
   isBluetoothEnabled: RNNoke.isBluetoothEnabled,
   AUTHOR: RNNoke.AUTHOR
 };

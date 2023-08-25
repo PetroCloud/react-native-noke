@@ -36,8 +36,7 @@ repositories {
     maven { url "https://jitpack.io" }
 
     maven {
-        url 'http://dl.bintray.com/dev-fingerlinks/maven'
-        allowInsecureProtocol = true
+        url 'https://dl.bintray.com/dev-fingerlinks/maven'
     }
     mavenCentral()
 }

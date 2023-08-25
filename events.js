@@ -1,9 +1,5 @@
-import { debounce } from 'lodash';
-import {
-  NativeEventEmitter,
-  NativeModules
-} from 'react-native';
-import { Observable } from 'rxjs/Observable';
+import { NativeEventEmitter, NativeModules } from 'react-native';
+import { Observable } from 'rxjs';
 
 const { RNNoke } = NativeModules;
 const NokeEmitter = new NativeEventEmitter(RNNoke);
@@ -23,8 +19,8 @@ export const offEvent = function (eventName, listener) {
   return this;
 };
 
-export const getEventListeners = function (eventName) {
-  return NokeEmitter.listeners(eventName);
+export const removeAllListeners = function (eventName) {
+  return NokeEmitter.removeAllListeners(eventName);
 };
 
 export const fromNokeEvents = () => {
@@ -49,8 +45,16 @@ export const fromNokeEvents = () => {
 
   let lastEvent = '';
 
-  return Observable.create(observer => {
-    onEvent('onNokeDiscovered', data => {
+  return new Observable((observer) => {
+    onEvent('onServiceConnected', (data) => {
+      observer.next({
+        name: 'onServiceConnected',
+        data
+      });
+      lastEvent = 'onServiceConnected';
+    });
+    
+    onEvent('onNokeDiscovered', (data) => {
       observer.next({
         name: 'onNokeDiscovered',
         data
@@ -58,7 +62,7 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeDiscovered';
     });
 
-    onEvent('onNokeConnecting', data => {
+    onEvent('onNokeConnecting', (data) => {
       observer.next({
         name: 'onNokeConnecting',
         data
@@ -66,7 +70,7 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeConnecting';
     });
 
-    onEvent('onNokeConnected', data => {
+    onEvent('onNokeConnected', (data) => {
       //clearTimeout(timer)
       if (lastEvent !== 'onNokeUnlocked') {
         observer.next({
@@ -77,7 +81,7 @@ export const fromNokeEvents = () => {
       }
     });
 
-    onEvent('onNokeSyncing', data => {
+    onEvent('onNokeSyncing', (data) => {
       observer.next({
         name: 'onNokeSyncing',
         data
@@ -85,7 +89,7 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeSyncing';
     });
 
-    onEvent('onNokeUnlocked', data => {
+    onEvent('onNokeUnlocked', (data) => {
       //clearTimeout(timer)
       observer.next({
         name: 'onNokeUnlocked',
@@ -94,7 +98,7 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeUnlocked';
     });
 
-    onEvent('onNokeDisconnected', data => {
+    onEvent('onNokeDisconnected', (data) => {
       observer.next({
         name: 'onNokeDisconnected',
         data
@@ -102,7 +106,7 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeDisconnected';
     });
 
-    onEvent('onNokeShutdown', data => {
+    onEvent('onNokeShutdown', (data) => {
       observer.next({
         name: 'onNokeShutdown',
         data
@@ -110,13 +114,12 @@ export const fromNokeEvents = () => {
       lastEvent = 'onNokeShutdown';
     });
 
-    onEvent('onError', data => {
+    onEvent('onError', (data) => {
       observer.next({
         name: 'onError',
         data
       });
       lastEvent = 'onError';
-    })
-
-  })
-}
+    });
+  });
+};
