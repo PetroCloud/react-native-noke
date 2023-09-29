@@ -13,7 +13,6 @@ const { RNNoke } = NativeModules;
 
 export default {
   initiateNokeService: RNNoke.initiateNokeService,
-  setApiKey: RNNoke.setApiKey,
   setBluetoothDelayDefault: RNNoke.setBluetoothDelayDefault,
   setBluetoothDelayBackgroundDefault: RNNoke.setBluetoothDelayBackgroundDefault,
   setBluetoothScanDuration: RNNoke.setBluetoothScanDuration,
@@ -35,6 +34,5 @@ export default {
   addNokeDeviceOnce: RNNoke.addNokeDeviceOnce,
   fromNokeEvents,
   removeAllListeners,
-  isBluetoothEnabled: RNNoke.isBluetoothEnabled,
   AUTHOR: RNNoke.AUTHOR
 };

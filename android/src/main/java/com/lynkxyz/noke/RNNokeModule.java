@@ -38,6 +38,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   private NokeDeviceManagerService mNokeService = null;
 
   private Integer nokeLibraryMode = 0;
+  private String mobileApiKey;
 
   public RNNokeModule(ReactApplicationContext context) {
     // Pass in the context to the constructor and save it so you can emit events
@@ -69,23 +70,6 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void removeListeners(Integer count) {
 
-  }
-
-  @ReactMethod
-  private void setApiKey(String key, Promise promise) {
-    try {
-      if(mNokeService == null) {
-        promise.reject("message", "mNokeService is null");
-        return;
-      }
-      mNokeService.setApiKey(key);
-      final WritableMap event = Arguments.createMap();
-      event.putBoolean("status", true);
-
-      promise.resolve(event);
-    } catch (IllegalViewOperationException e) {
-      promise.reject("message", e.getMessage());
-    }
   }
 
   @ReactMethod
@@ -140,10 +124,11 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  private void initiateNokeService(int mode, Promise promise) {
+  private void initiateNokeService(int mode, String key, Promise promise) {
     try {
       Intent nokeServiceIntent = new Intent(reactContext, NokeDeviceManagerService.class);
       nokeLibraryMode = mode;
+      mobileApiKey = key;
       reactContext.bindService(nokeServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
       WritableMap event = Arguments.createMap();
       event.putBoolean("status", true);
@@ -154,22 +139,22 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
     }
   }
 
-  @ReactMethod
-  public void isBluetoothEnabled(Promise promise) {
-    try {
-      if (mNokeService == null) {
-        promise.reject("message", "mNokeService is null");
-        return;
-      }
-      final Boolean enabled = mNokeService.isBluetoothEnabled();
-      final WritableMap event = Arguments.createMap();
-      event.putBoolean("enabled", enabled);
+  // @ReactMethod
+  // public void isBluetoothEnabled(Promise promise) {
+  //   try {
+  //     if (mNokeService == null) {
+  //       promise.reject("message", "mNokeService is null");
+  //       return;
+  //     }
+  //     final Boolean enabled = mNokeService.isBluetoothEnabled();
+  //     final WritableMap event = Arguments.createMap();
+  //     event.putBoolean("enabled", enabled);
 
-      promise.resolve(event);
-    } catch (IllegalViewOperationException e) {
-      promise.reject("message", e.getMessage());
-    }
-  }
+  //     promise.resolve(event);
+  //   } catch (IllegalViewOperationException e) {
+  //     promise.reject("message", e.getMessage());
+  //   }
+  // }
 
   @ReactMethod
   public void startScan(Promise promise) {
@@ -361,7 +346,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
       Log.w(TAG, "ON SERVICE CONNECTED");
 
       //Store reference to service
-      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(nokeLibraryMode);
+      mNokeService = ((NokeDeviceManagerService.LocalBinder) rawBinder).getService(nokeLibraryMode, mobileApiKey);
 
       //Uncomment to allow devices that aren't in the device array
       mNokeService.setAllowAllDevices(true);
@@ -501,6 +486,7 @@ public class RNNokeModule extends ReactContextBaseJavaModule {
   };
 
   private static void emitDeviceEvent(String eventName, @Nullable WritableMap eventData) {
+    Log.d(TAG, "emitDeviceEvent " + eventName);
     // A method for emitting from the native side to JS
     // https://facebook.github.io/react-native/docs/native-modules-android.html#sending-events-to-javascript
     reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, eventData);
