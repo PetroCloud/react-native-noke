@@ -17,5 +17,8 @@
   "repository": "https://github.com/PetroCloud/react-native-noke",
   "peerDependencies": {
     "react-native": "^0.72.3"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.1"
   }
 }

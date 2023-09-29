@@ -5,18 +5,21 @@ const { RNNoke } = NativeModules;
 const NokeEmitter = new NativeEventEmitter(RNNoke);
 
 export const onEvent = function (eventName, callback) {
-  NokeEmitter.addListener(eventName, callback);
-  return this;
+  return NokeEmitter.addListener(eventName, callback);
 };
 
 export const onEventOnce = function (eventName, callback) {
-  NokeEmitter.once(eventName, callback);
-  return this;
+  const subscription = onEvent(eventName, (...args) => {
+    callback(...args);
+    subscription.remove();
+  });
+  return subscription;
 };
 
-export const offEvent = function (eventName, listener) {
-  NokeEmitter.removeListener(eventName, listener);
-  return this;
+export const offEvent = function (subscription) {
+  if (subscription?.remove) {
+    subscription.remove();
+  }
 };
 
 export const removeAllListeners = function (eventName) {
