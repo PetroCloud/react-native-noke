@@ -533,6 +533,8 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
         case NokeLibraryMode.OPEN:
             self.uploadUrl = ApiURL.openString
             break
+        case NokeLibraryMode.CUSTOM:
+            break
         }
     }
     
