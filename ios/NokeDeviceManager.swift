@@ -141,6 +141,9 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
         }
     }
     
+    /// Int value to filter out devices below a certain RSSI level
+    public var rssiThreshold: Int = -127    
+    
     public var uploadDelegate: NokeUploadDelegate?
     
     /// Array of Noke devices managed by the NokeDeviceManager
@@ -262,6 +265,10 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
+        
+        if(RSSI.intValue < rssiThreshold){
+            return
+        }
         
         var broadcastName : String? = advertisementData[CBAdvertisementDataLocalNameKey] as? String
         
@@ -520,7 +527,7 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     }
     
     /// Sets Upload URL for uploading Noke device responses to the Core API
-    public func setLibraryMode(_ mode: NokeLibraryMode){
+    public func setLibraryMode(_ mode: NokeLibraryMode, customURL: String = ""){
         switch mode {
         case NokeLibraryMode.SANDBOX:
             self.uploadUrl = ApiURL.sandboxUploadURL
@@ -532,11 +539,13 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
             self.uploadUrl = ApiURL.developUploadURL
         case NokeLibraryMode.OPEN:
             self.uploadUrl = ApiURL.openString
-            break
         case NokeLibraryMode.CUSTOM:
+            self.uploadUrl = customURL
             break
         }
     }
+    
+    
     
     /// Saves upload packets to user defaults to ensure they're cached before uploading
     public func cacheUploadQueue(){

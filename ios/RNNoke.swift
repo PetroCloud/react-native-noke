@@ -133,6 +133,12 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
         case 2:
             mode = NokeLibraryMode.DEVELOP
             break
+        case 3:
+            mode = NokeLibraryMode.OPEN
+            break
+        case 4:
+            mode = NokeLibraryMode.CUSTOM
+            break
         default:
             mode = NokeLibraryMode.SANDBOX
             break
