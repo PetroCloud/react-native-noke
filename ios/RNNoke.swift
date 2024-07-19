@@ -116,6 +116,7 @@ class RNNoke : RCTEventEmitter, NokeDeviceManagerDelegate {
 
     @objc func initiateNokeService(
         _ code: Int,
+        key: String,
         resolver resolve: RCTPromiseResolveBlock,
         rejecter reject: RCTPromiseRejectBlock
         ) {
