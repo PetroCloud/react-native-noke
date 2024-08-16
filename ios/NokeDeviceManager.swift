@@ -162,7 +162,7 @@ public class NokeDeviceManager: NSObject, CBCentralManagerDelegate, NokeDeviceDe
     static var sharedNokeDeviceManager: NokeDeviceManager?
     
     /// Boolean that allows SDK to discover devices that haven't been added to the array
-    var allowAllNokeDevices: Bool = false
+    var allowAllNokeDevices: Bool = true
     
     /// Boolean that should be set when scanning for devices to update firmware
     public var firmwareScanning = false
