@@ -1,7 +1,8 @@
 {
   "name": "react-native-noke",
-  "version": "4.0.1",
+  "version": "4.1.1",
   "description": "Noke SDK for React-Native",
+  "homepage": "https://epicio.com/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +16,9 @@
   "license": "",
   "repository": "https://github.com/PetroCloud/react-native-noke",
   "peerDependencies": {
-    "react-native": "^0.41.2"
+    "react-native": "^0.72.0"
+  },
+  "dependencies": {
+    "rxjs": "^7.8.1"
   }
 }
