@@ -32,7 +32,7 @@ RCT_EXTERN_METHOD(initiateNokeService)
 RCT_EXTERN_METHOD(offlineUnlock)
 
 RCT_EXTERN_METHOD(
-                  initiateNokeService: (NSInteger) code
+                  initiateNokeService: (NSInteger) code key:(NSString) value
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject
                   )
@@ -47,6 +47,13 @@ RCT_EXTERN_METHOD(
 
 RCT_EXTERN_METHOD(
                   addNokeDevice:(NSDictionary) value
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject
+                  )
+
+
+RCT_EXTERN_METHOD(
+                  addNokeOfflineValues:(NSDictionary) value
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject
                   )

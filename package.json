@@ -2,7 +2,7 @@
   "name": "react-native-noke",
   "version": "4.1.1",
   "description": "Noke SDK for React-Native",
-  "homepage": "",
+  "homepage": "https://epicio.com/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
